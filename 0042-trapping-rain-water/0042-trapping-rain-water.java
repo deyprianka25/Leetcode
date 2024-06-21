@@ -1,20 +1,36 @@
 class Solution {
     public int trap(int[] height) {
-        final int n = height.length;
-    int ans = 0;
-    int[] l = new int[n]; // l[i] := max(height[0..i])
-    int[] r = new int[n]; // r[i] := max(height[i..n))
+        int n = height.length; // Correct method to get array length
+        int leftmax = 0, rightmax = 0, maxheight = height[0], index = 0;
+        int water = 0; // Initialize the water variable
 
-    for (int i = 0; i < n; ++i)
-      l[i] = i == 0 ? height[i] : Math.max(height[i], l[i - 1]);
+        // Find the highest bar and its index
+        for (int i = 1; i < n; i++) { // Declare i in the loop
+            if (maxheight < height[i]) {
+                maxheight = height[i];
+                index = i;
+            }
+        }
 
-    for (int i = n - 1; i >= 0; --i)
-      r[i] = i == n - 1 ? height[i] : Math.max(height[i], r[i + 1]);
+        // Calculate water trapped to the left of the highest bar
+        for (int i = 0; i < index; i++) {
+            if (leftmax > height[i]) {
+                water += leftmax - height[i];
+            } else {
+                leftmax = height[i];
+            }
+        }
 
-    for (int i = 0; i < n; ++i)
-      ans += Math.min(l[i], r[i]) - height[i];
+        // Calculate water trapped to the right of the highest bar
+        for (int i = n - 1; i > index; i--) { // Correct loop condition
+            if (rightmax > height[i]) {
+                water += rightmax - height[i];
+            } else {
+                rightmax = height[i];
+            }
+        }
 
-    return ans;
-        
+        return water;
     }
 }
+    
