@@ -5,14 +5,11 @@ class Solution {
 
         for (char currentChar : s.toCharArray()) {
             if (currentChar == '(') {
-                // Store the current length as the start index for future reversal
                 openParenthesesIndices.push(result.length());
             } else if (currentChar == ')') {
                 int start = openParenthesesIndices.pop();
-                // Reverse the substring between the matching parentheses
                 reverse(result, start, result.length() - 1);
             } else {
-                // Append non-parenthesis characters to the processed string
                 result.append(currentChar);
             }
         }
