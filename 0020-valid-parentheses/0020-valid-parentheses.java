@@ -1,8 +1,8 @@
 class Solution {
     public boolean isValid(String s) {
-            Deque<Character> stack = new ArrayDeque<>();
+            Stack<Character> stack = new Stack<>();
 
-    for (final char c : s.toCharArray())
+    for (char c : s.toCharArray())
       if (c == '(')
         stack.push(')');
       else if (c == '{')
