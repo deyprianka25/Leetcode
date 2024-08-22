@@ -10,24 +10,24 @@
  */
 class Solution {
     public ListNode oddEvenList(ListNode head) {
-            ListNode oddHead = new ListNode(0);
-    ListNode evenHead = new ListNode(0);
-    ListNode odd = oddHead;
-    ListNode even = evenHead;
+         if (head == null || head.next == null) {
+            return head;
+        }
 
-    for (boolean isOdd = true; head != null; head = head.next, isOdd = !isOdd)
-      if (isOdd) {
-        odd.next = head;
-        odd = odd.next;
-      } else {
-        even.next = head;
-        even = even.next;
-      }
+        ListNode odd = head;
+        ListNode even = head.next;
+        ListNode evenStart = even;
 
-    odd.next = evenHead.next;
-    even.next = null;
-    return oddHead.next;
-  }
+        while (even != null && even.next != null) {
+            odd.next = even.next;
+            odd = odd.next;
+
+            even.next = odd.next;
+            even = even.next;
+        }
+
+        // Final connection after loop ends
+        odd.next = evenStart;
+        return head;
+    }
 }
-        
-    
