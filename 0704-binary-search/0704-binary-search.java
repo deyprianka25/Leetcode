@@ -1,21 +1,22 @@
 class Solution {
-    public int search(int[] nums, int target) {
-        int low = 0;
-        int high = nums.length - 1;
-        while(low < high){
-            int mid = (low+high)/2;
-            if(nums[mid]<target){
-                low = mid + 1;
-            }else{
-                high = mid;
-            }
+    private static int solve(int[] nums,int s,int e,int k){
+        if(s>e){
+            return -1;
         }
-       if (nums[low] == target) {
-    return low;
-} else {
-    return -1;
-}
-        
+        int mid = s+(e-s)/2;
+        if(nums[mid]==k){
+            return mid;
+        }
+        if(nums[mid]<k){
+            return solve(nums,mid+1,e,k);
+        }
+        else{
+            return solve(nums,s,mid-1,k);
+        }
+    }
+    public int search(int[] nums, int target) {
+        int ans = solve(nums,0,nums.length-1,target);
+        return ans;
         
     }
 }
