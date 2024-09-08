@@ -1,19 +1,21 @@
 class Solution {
-    public int searchInsert(int[] nums, int target) {
-      int start = 0;
-        int end = nums.length - 1;
-
-        while (start <= end) {
-            int mid = start + (end - start) / 2; // This avoids potential overflow
-            if (nums[mid] == target) {
-                return mid;
-            } else if (nums[mid] > target) {
-                end = mid - 1;
-            } else {
-                start = mid + 1;
-            }
+    private static int solve(int[] nums,int s,int e, int k){
+        if(s>e){
+            return s;
         }
-
-        return start; // When start > end, start is the correct insertion point
+        int mid = s+(e-s)/2;
+        if(nums[mid]==k){
+            return mid;
+        }
+        if(nums[mid]<k){
+            return solve(nums,mid+1,e,k);
+        }
+        else{
+            return solve(nums,s,mid-1,k);
+        }
+    }
+    public int searchInsert(int[] nums, int target) {
+      int ans = solve(nums,0,nums.length-1,target);
+        return ans;
     }
 }
