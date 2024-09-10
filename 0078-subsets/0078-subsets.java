@@ -1,17 +1,24 @@
 class Solution {
-    public List<List<Integer>> subsets(int[] nums) {
-    List<List<Integer>> ans = new ArrayList<>();
-    dfs(nums, 0, new ArrayList<>(), ans);
-    return ans;
-  }
+    public static void subsequence(int[] nums, int index, int n, List<List<Integer>> ans, List<Integer> temp) {
+        if (index == n) {
+            ans.add(new ArrayList<>(temp));  // Create a new copy of temp before adding it
+            return;
+        }
 
-  private void dfs(int[] nums, int s, List<Integer> path, List<List<Integer>> ans) {
-    ans.add(new ArrayList<>(path));
+        // Exclude the current element and move to the next
+        subsequence(nums, index + 1, n, ans, temp);
 
-    for (int i = s; i < nums.length; ++i) {
-      path.add(nums[i]);
-      dfs(nums, i + 1, path, ans);
-      path.remove(path.size() - 1);
+        // Include the current element and move to the next
+        temp.add(nums[index]);
+        subsequence(nums, index + 1, n, ans, temp);
+
+        // Backtrack and remove the element before the next recursion step
+        temp.remove(temp.size() - 1);
     }
-  }
+    public List<List<Integer>> subsets(int[] nums) {
+     List<List<Integer>> ans = new ArrayList<>();
+        List<Integer> temp = new ArrayList<>();
+        subsequence(nums, 0, nums.length, ans, temp);  // Use nums.length instead of nums.size()
+        return ans;
+    }
 }
