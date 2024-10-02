@@ -1,42 +1,47 @@
 class Solution {
     public List<Integer> spiralOrder(int[][] matrix) {
-        List<Integer> result = new ArrayList<>();
-        if (matrix == null || matrix.length == 0 || matrix[0].length == 0)
-            return result;
-
-        int rows = matrix.length;
-        int cols = matrix[0].length;
-        int top = 0, bottom = rows - 1, left = 0, right = cols - 1;
-
-        while (top <= bottom && left <= right) {
-            // Traverse Right
-            for (int i = left; i <= right; i++) {
-                result.add(matrix[top][i]);
-            }
-            top++;
-             for (int i = top; i <= bottom; i++) {
-                result.add(matrix[i][right]);
-            }
-            right--;
-
-            // Traverse Left
-            if (top <= bottom) { // check if top didn't cross bottom
-                for (int i = right; i >= left; i--) {
-                    result.add(matrix[bottom][i]);
-                }
-                bottom--;
-            }
-
-            // Traverse Up
-            if (left <= right) { // check if left didn't cross right
-                for (int i = bottom; i >= top; i--) {
-                    result.add(matrix[i][left]);
-                      }
-                left++;
-            }
-        }
-
-        return result;
+        List<Integer> ans = new ArrayList<>();
         
+        // Initialize boundaries for rows and columns
+        int srow = 0;                 // Start row
+        int scol = 0;                 // Start column
+        int erow = matrix.length - 1;  // End row
+        int ecol = matrix[0].length - 1; // End column
+        
+        int total = matrix.length * matrix[0].length;
+        int count = 0;
+        
+        // Traverse the matrix in spiral order
+        while (count < total) {
+            // Print first row (left to right)
+            for (int i = scol; count < total && i <= ecol; i++) {
+                ans.add(matrix[srow][i]);
+                count++;
+            }
+            srow++;
+            
+            // Print last column (top to bottom)
+            for (int i = srow; count < total && i <= erow; i++) {
+                ans.add(matrix[i][ecol]);
+                count++;
+            }
+            ecol--;
+            
+            // Print last row (right to left)
+            for (int i = ecol; count < total && i >= scol; i--) {
+                ans.add(matrix[erow][i]);
+                count++;
+            }
+            erow--;
+            
+            // Print first column (bottom to top)
+            for (int i = erow; count < total && i >= srow; i--) {
+                ans.add(matrix[i][scol]);
+                count++;
+            }
+            scol++;
+        }
+        
+        return ans;
     }
 }
